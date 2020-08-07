@@ -11,11 +11,16 @@ class FileHydra:
         """processes only files without spaces in name"""
         files=self.get_files_in_directory(olddir,suffix)
         list1=self.name_contains(prefix,files)
-        filename=list1[index]
-    	 #print(list1, olddir,newdir)
-        filename=filename.split('\\'+olddir+'\\')[1]
-        path="move "+olddir+"\\"+filename+" "+newdir+"\\"+filename
-        os.system(path)           
+        if len(list1)>0:
+            filename=list1[index]
+        	 #print(list1, olddir,newdir)
+            filename=filename.split(olddir+'\\')[1]
+            path="move "+olddir+"\\"+filename+" "+newdir#+"\\"+filename
+            print(path)
+            os.system(path)
+            
+        else:
+            print("No files found")
         
     def get_files_in_directory(self,dir,suffix):
         """Returns list of .txt files in given directory"""
@@ -26,8 +31,9 @@ class FileHydra:
     
     def name_contains(self,s,files):
         """Returns list of files containing given string s in their name"""
-        filtered_files=[file for file in files if s in file]  
+        filtered_files=[file for file in files if s in file]
         return(filtered_files) 
 
+#Example
 hydra=FileHydra("")
-hydra.move_file("",".xlsx","C:\\Users\\EUROCOM\\Desktop\\Potenciál Poptávek","C:\\Users\\EUROCOM\\Desktop",0)
+hydra.move_file("",".pdf","C:\\Users\\EUROCOM\\Desktop\\Folder","C:\\Users\\EUROCOM\\Desktop",0)
