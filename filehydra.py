@@ -33,7 +33,14 @@ class FileHydra:
         """Returns list of files containing given string s in their name"""
         filtered_files=[file for file in files if s in file]
         return(filtered_files) 
+    
+    def rename_file(self,oldfile,newfile):
+        pass
+    
+    def copy_file(self,oldfile,newfile):
+        pass
 
 #Example
 hydra=FileHydra("")
 hydra.move_file("",".pdf","C:\\Users\\EUROCOM\\Desktop\\Folder","C:\\Users\\EUROCOM\\Desktop",0)
+
