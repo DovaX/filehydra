@@ -40,7 +40,13 @@ class FileHydra:
     def copy_file(self,oldfile,newfile):
         pass
 
-#Example
-hydra=FileHydra("")
-hydra.move_file("",".pdf","C:\\Users\\EUROCOM\\Desktop\\Folder","C:\\Users\\EUROCOM\\Desktop",0)
 
+
+
+    def create_folder(self,name):
+        os.mkdir(name)
+
+ 
+        
+fh=FileHydra(".")
+fh.generate_file_queue("HELLO")
