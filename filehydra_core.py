@@ -3,7 +3,7 @@ import glob
 
 class FileHydra:
     """This hydra lives in your folder structure and works with your files"""
-    def __init__(self,location):
+    def __init__(self,location="."):
         self.location=location
         self.target=location  
     
@@ -18,7 +18,6 @@ class FileHydra:
             path="move "+olddir+"\\"+filename+" "+newdir#+"\\"+filename
             print(path)
             os.system(path)
-            
         else:
             print("No files found")
         
@@ -46,7 +45,10 @@ class FileHydra:
     def create_folder(self,name):
         os.mkdir(name)
 
- 
+    def remove_folder(self,name):
+        os.rmdir(name)
+
+    def delete_file(self,name):
+        os.remove(name)
         
-fh=FileHydra(".")
-fh.generate_file_queue("HELLO")
+        
