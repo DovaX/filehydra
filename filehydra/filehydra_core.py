@@ -51,4 +51,28 @@ class FileHydra:
     def delete_file(self,name):
         os.remove(name)
         
+   
+class FileTemplate:
+    """Opens file, writes into file, reads file"""
+    def __init__(self,prefix,suffix,typ=None):
+        """suffix ... usually txt or xlsx"""
+        
+        self.prefix=prefix
+        self.suffix=suffix
+        if "txt" in self.suffix:
+            self.type="txt"
+        elif "xlsx" in self.suffix:
+            self.type="xlsx"
+        else:
+            self.type=typ
+        
+            
+    def extract_data(self,filename):
+        if self.type=="txt":
+            with open(filename,"r") as f:
+                rows=f.readlines()
+            return(rows)
+        elif self.type=="xlsx":
+            df=pd.read_excel(filename,index_col=0)
+            return(df)
         
