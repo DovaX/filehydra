@@ -1,44 +1,71 @@
 import os
 import glob
+import pandas as pd
 
-class FileHydra:
-    """This hydra lives in your folder structure and works with your files"""
-    def __init__(self,location="."):
-        self.location=location
-        self.target=location  
-    
-    def move_file(self,prefix,suffix,olddir,newdir,index):
-        """processes only files without spaces in name"""
-        files=self.get_files_in_directory(olddir,suffix)
-        list1=self.name_contains(prefix,files)
-        if len(list1)>0:
-            filename=list1[index]
-        	 #print(list1, olddir,newdir)
-            filename=filename.split(olddir+'\\')[1]
-            path="move "+olddir+"\\"+filename+" "+newdir#+"\\"+filename
-            print(path)
-            os.system(path)
-        else:
-            print("No files found")
-        
-    def get_files_in_directory(self,dir,suffix):
+
+def get_files_in_directory(dir,suffix):
         """Returns list of .txt files in given directory"""
         SITE_ROOT = os.path.realpath(os.path.dirname(__file__))    
         DIRECTORY = os.path.join(SITE_ROOT, dir)
         files = glob.glob(DIRECTORY + '/*'+suffix, recursive=True)
         return(files)        
     
-    def name_contains(self,s,files):
-        """Returns list of files containing given string s in their name"""
-        filtered_files=[file for file in files if s in file]
-        return(filtered_files) 
+def name_contains(s,files):
+    """Returns list of files containing given string s in their name"""
+    filtered_files=[file for file in files if s in file]
+    return(filtered_files) 
+
+
+
+class FileHydra:
+    """This hydra lives in your folder structure and works with your files"""
+    def __init__(self,location="."):
+        self.location=location
+        
+        os.chdir(self.location)
+        #self.target=location
+        
+        self.file_queues=[]
+    
+    def move_file_in_queue(self,prefix,suffix,olddir,newdir,index):
+        """processes only files without spaces in name"""
+        files=get_files_in_directory(olddir,suffix)
+        list1=name_contains(prefix,files)
+        if len(list1)>0:
+            filename=list1[index]
+            
+            
+            filename=filename.split(olddir+'\\')[1]
+            
+            self.move_file(filename,olddir,newdir)
+            #path="move "+olddir+"\\"+filename+" "+newdir#+"\\"+filename
+            #print(path)
+            #os.system(path)
+        else:
+            print("No files found")
+        
+    
+    def move_file(self,filename,olddir,newdir):
+        """processes only files without spaces in name"""
+        if olddir in filename:
+            path="move "+filename+" "+newdir#+"\\"+filename
+        else:
+            path="move "+olddir+"\\"+filename+" "+newdir#+"\\"+filename
+        print(path)
+        os.system(path)
+        
+        
+        
+        
+        
+        
+    
     
     def rename_file(self,oldfile,newfile):
         pass
     
     def copy_file(self,oldfile,newfile):
         pass
-
 
 
 
@@ -51,6 +78,20 @@ class FileHydra:
     def delete_file(self,name):
         os.remove(name)
         
+        
+        
+       
+        
+    def change_hydra_location(self,target_folder):
+        self.location=target_folder
+        os.chdir(self.location)
+        
+        
+    def create_file_queue(self,name):
+        self.file_queues.append(FileQueue(self.location,name))
+        self.file_queues[-1].initialize_queue_folders()
+        
+
    
 class FileTemplate:
     """Opens file, writes into file, reads file"""
