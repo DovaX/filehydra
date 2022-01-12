@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
     
 setuptools.setup(
     name='filehydra',
-    version='0.1.0',
+    version='0.1.1',
     author='DovaX',
     author_email='dovax.ai@gmail.com',
     description='A Python package focusing on file management and routine file operations',
@@ -19,7 +19,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-          
+          'pandas'
      ],
     python_requires='>=3.6',
 )
