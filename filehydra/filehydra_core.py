@@ -169,6 +169,23 @@ class FileQueue:
             
         
         
+    def compare_two_files_and_process_first(self,file_template,process_data_function):
+        try:
+            self.refresh_files_in_queue(file_template)
+            filename1=self.files_in_queue[0]
+            filename2=self.files_in_queue[1]
+            data1=file_template.extract_data(filename1)
+            data2=file_template.extract_data(filename2)
+            process_data_function(data1,data2)
+            
+            self.filehydra.move_file(filename1,self.queue_path, self.queue_path+"\\processed")
+            return(filename1,filename2,data1,data2)
+        except IndexError:
+            print("No suitable file - no move")
+            return("","",None,None)
+            
+        
+        
         
         
         
