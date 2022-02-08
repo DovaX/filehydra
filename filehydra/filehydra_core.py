@@ -1,5 +1,6 @@
 import os
 import glob
+import shutil
 import pandas as pd
 
 
@@ -47,6 +48,13 @@ class FileHydra:
     
     def move_file(self,filename,olddir,newdir):
         """processes only files without spaces in name"""
+        try:
+            os.mkdir(newdir)
+            print("Newdir "+newdir+" created")
+        except:
+            print("Newdir exists")
+        
+        
         if olddir in filename:
             path="move "+filename+" "+newdir#+"\\"+filename
         else:
@@ -55,22 +63,19 @@ class FileHydra:
         os.system(path)
         
         
-        
-        
-        
-        
-    
-    
+
     def rename_file(self,oldfile,newfile):
-        pass
-    
-    def copy_file(self,oldfile,newfile):
-        pass
-
-
+        os.rename(oldfile,newfile)
+                
+    def copy_file(self,oldfile,destination):
+        shutil.copy(oldfile,destination)
 
     def create_folder(self,name):
-        os.mkdir(name)
+        try:
+            os.mkdir(name)
+            print("Folder "+name+" was created.")
+        except FileExistsError:
+            print("folder "+name+" already exists, creation skipped.")
 
     def remove_folder(self,name):
         os.rmdir(name)
