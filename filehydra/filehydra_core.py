@@ -47,7 +47,7 @@ class FileHydra:
         
     
     def move_file(self,filename,olddir,newdir):
-        """processes only files without spaces in name"""
+        
         try:
             os.mkdir(newdir)
             print("Newdir "+newdir+" created")
@@ -56,9 +56,9 @@ class FileHydra:
         
         
         if olddir in filename:
-            path="move "+filename+" "+newdir#+"\\"+filename
+            path = f'move "{filename}" "{newdir}"'
         else:
-            path="move "+olddir+"\\"+filename+" "+newdir#+"\\"+filename
+            path = f'move "{os.path.join(olddir, filename)}" "{newdir}"'
         print(path)
         os.system(path)
         
